@@ -1,9 +1,8 @@
-# Import file "travel_ui" (sizes and positions are scaled 1:2)
-sketch1 = Framer.Importer.load("imported/travel_ui@2x")
-# Import file "travel_ui"
 sketch = Framer.Importer.load('imported/travel_ui@2x')
 sketch['ItemView'].destroy()
 sketch['StatusBar'].index = 200
+
+Framer.Extras.Hints.disable() # i wish i could disable it only for "tap on draggable"
 
 {modulate} = Utils
 {abs, floor, min, max} = Math
@@ -63,18 +62,18 @@ for number in [0...10]
 	item.draggable.on Events.DragStart, () ->
 		page.speedX = 0
 			
-	item.draggable.on Events.DragMove, do (item) -> ({ offsetDirection }) ->
-		distance = abs(item.y + page.y)
-		radius = 300
+	item.draggable.on Events.DragMove, do (item) -> () ->
+		distance = abs(item.y)
+		radius = if item.y < 0 then 300 else 100
 		item.draggable.speedY = 1 - min(distance, radius) / radius
 		
-	item.draggable.on Events.DragEnd, do (item) -> () ->
+	item.draggable.on Events.DragEnd, do (item) -> ({ offsetDirection }) ->
 		item.draggable.speedY = 1
 		
-		if item.y > thresholdToClose
+		if offsetDirection == 'down'
 			item.states.switch('closed')
 			page.speedX = 1
-		else if item.y < thresholdToOpen
+		else if offsetDirection == 'up'
 			item.states.switch('open')
 			
 	item.on 'change:y', do (item) -> () ->
