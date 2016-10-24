@@ -12,7 +12,8 @@ itemWidth = sketch['Item'].width
 cardHeight = sketch['CardBackground'].height
 commentBaseY = sketch['Comment'].y
 sideGap = (Screen.width - itemWidth) / 2
-listGap = 22
+listGap = 30
+inactiveItemOpacity = 0.5
 
 page = new PageComponent
 	index: 100
@@ -43,8 +44,9 @@ for number in [0...10]
 	
 	item = sketch['Item'].copy()
 	item.parent = perspectiveLayer
-	item.opacity = 0.5
+	item.opacity = inactiveItemOpacity
 	item.x = 0
+	item.index = 50
 	item.draggable.enabled = false
 	item.draggable.horizontal = false
 	item.draggable.momentum = false
@@ -58,11 +60,8 @@ for number in [0...10]
 	item.states.animationOptions =
 		curve: "spring(200, 20, 10)"
 		
-	item.draggable.on Events.DragEnd, do (item) -> () ->
-		if item.y > thresholdToClose
-			item.states.switch('closed')
-		else if item.y < thresholdToOpen
-			item.states.switch('open')
+	item.draggable.on Events.DragStart, () ->
+		page.speedX = 0
 			
 	item.draggable.on Events.DragMove, do (item) -> ({ offsetDirection }) ->
 		distance = abs(item.y + page.y)
@@ -71,10 +70,17 @@ for number in [0...10]
 		
 	item.draggable.on Events.DragEnd, do (item) -> () ->
 		item.draggable.speedY = 1
+		
+		if item.y > thresholdToClose
+			item.states.switch('closed')
+			page.speedX = 1
+		else if item.y < thresholdToOpen
+			item.states.switch('open')
 			
 	item.on 'change:y', do (item) -> () ->
 		[card] = item.childrenWithName('CardBackground')
 		[comment] = item.childrenWithName('Comment')
+		[cardContent] = item.childrenWithName('CardContent')
 		
 		card.width =
 			modulate(item.y, [0, listY], [itemWidth, Screen.width * 1.2], true)
@@ -87,11 +93,21 @@ for number in [0...10]
 		comment.scale =
 			modulate(item.y, [0, listY], [1, 1.2], true)
 		
+		cardContent.y =
+			modulate(item.y, [0, listY], [0, 50], true)
+		cardContent.scale =
+			modulate(item.y, [0, listY], [1, 1.2], true)
+			
+		for thisPage in page.content.children
+			if thisPage isnt page.currentPage
+				thisPage.children[0].opacity =
+					modulate(item.y, [0, listY * 0.7], [inactiveItemOpacity, 0], true)
 
 sketch['ItemList'].destroy()
 	
 startAtLayer = page.content.children[4]
 startAtLayer.children[0].opacity = 1
+startAtLayer.index = 60
 startAtLayer.children[0].draggable.enabled = true
 page.snapToPage(startAtLayer, false)
 
@@ -112,13 +128,22 @@ page.onScroll (event) ->
 page.onMove ->
 	for { children: [thisLayer] } in page.content.children
 		distance = abs(thisLayer.screenFrame.x - sideGap)
-		thisLayer.opacity = modulate(distance, [0, itemWidth], [1, 0.3], true)
+		thisLayer.opacity =
+			modulate(distance, [0, itemWidth], [1, inactiveItemOpacity], true)
 		thisLayer.rotationY = calculateRotation(distance, direction)
 		
-page.on "change:currentPage", ->
+page.on 'change:currentPage', ->
 	for thisPage in page.content.children
-		thisPage.children[0].draggable.enabled = thisPage == page.currentPage
-		
-
+		isActive = thisPage == page.currentPage
+		thisPage.children[0].draggable.enabled = isActive
+		thisPage.index = if isActive then 60 else 50
+	
+page.on Events.ScrollStart, ->
+	for { children: [thisLayer] } in page.content.children
+		thisLayer.draggable.speedY = 0
+	
+page.on Events.ScrollEnd, ->
+	for { children: [thisLayer] } in page.content.children
+		thisLayer.draggable.speedY = 1
 	
 	
