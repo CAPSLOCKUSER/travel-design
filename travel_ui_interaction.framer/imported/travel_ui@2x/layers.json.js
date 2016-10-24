@@ -444,7 +444,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 										},
 										"layerFrame": {
 											"x": 81,
-											"y": 500,
+											"y": 495,
 											"width": 214,
 											"height": 88
 										},
@@ -456,7 +456,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 											"path": "images/Layer-Image-meeymkiw.png",
 											"frame": {
 												"x": 81,
-												"y": 500,
+												"y": 495,
 												"width": 214,
 												"height": 88
 											}
@@ -475,8 +475,8 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 											"height": 42
 										},
 										"layerFrame": {
-											"x": 79,
-											"y": 333,
+											"x": 80,
+											"y": 330,
 											"width": 213,
 											"height": 42
 										},
@@ -487,8 +487,8 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 										"image": {
 											"path": "images/Layer-Avatar-numxqzq3.png",
 											"frame": {
-												"x": 79,
-												"y": 333,
+												"x": 80,
+												"y": 330,
 												"width": 213,
 												"height": 42
 											}
@@ -503,7 +503,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 										"maskFrame": null,
 										"layerFrame": {
 											"x": 84,
-											"y": 601,
+											"y": 603,
 											"width": 213,
 											"height": 17
 										},
@@ -515,7 +515,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 											"path": "images/Layer-Share-qtfbmjfc.png",
 											"frame": {
 												"x": 84,
-												"y": 601,
+												"y": 603,
 												"width": 213,
 												"height": 17
 											}
@@ -525,10 +525,42 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 								]
 							},
 							{
-								"objectId": "3B1306B8-F2DC-46A2-B95A-95C4599F32A7",
+								"objectId": "A931ABDD-C810-4918-89E9-B29802895806",
 								"kind": "group",
-								"name": "Card2",
-								"originalName": "Card",
+								"name": "CardContent",
+								"originalName": "CardContent",
+								"maskFrame": {
+									"x": 0,
+									"y": 0,
+									"width": 260,
+									"height": 165
+								},
+								"layerFrame": {
+									"x": 58,
+									"y": 123,
+									"width": 260,
+									"height": 165
+								},
+								"visible": true,
+								"metadata": {
+									"opacity": 1
+								},
+								"image": {
+									"path": "images/Layer-CardContent-qtkzmufc.png",
+									"frame": {
+										"x": 58,
+										"y": 123,
+										"width": 260,
+										"height": 165
+									}
+								},
+								"children": []
+							},
+							{
+								"objectId": "2AAA7257-23D3-47EC-9811-1C0750E370B7",
+								"kind": "group",
+								"name": "CardBackground",
+								"originalName": "CardBackground",
 								"maskFrame": {
 									"x": 0,
 									"y": 0,
@@ -546,7 +578,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 									"opacity": 1
 								},
 								"image": {
-									"path": "images/Layer-Card-m0ixmza2.png",
+									"path": "images/Layer-CardBackground-mkfbqtcy.png",
 									"frame": {
 										"x": 54,
 										"y": 121,
@@ -861,7 +893,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 			{
 				"objectId": "BF4DA0C7-E701-4280-98A4-A636FD444B9A",
 				"kind": "group",
-				"name": "Card3",
+				"name": "Card2",
 				"originalName": "Card",
 				"maskFrame": {
 					"x": 0,

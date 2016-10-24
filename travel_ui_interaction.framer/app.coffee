@@ -1,3 +1,4 @@
+# Import file "travel_ui"
 sketch = Framer.Importer.load("imported/travel_ui@2x")
 sketch['ItemView'].destroy()
 
@@ -5,6 +6,7 @@ sketch['ItemView'].destroy()
 {abs} = Math
 
 itemWidth = sketch['Item'].width
+cardHeight = sketch['CardBackground'].height
 gap = (Screen.width - itemWidth) / 2
 
 page = new PageComponent
@@ -21,9 +23,6 @@ page = new PageComponent
 	
 thresholdToOpen = -page.y * 0.2
 thresholdToClose = -page.y * 0.8
-
-print thresholdToOpen
-print thresholdToClose
 
 for number in [0...10]
 	perspectiveLayer = new Layer
@@ -56,16 +55,31 @@ for number in [0...10]
 		curve: "spring(200, 20, 10)"
 		
 	item.draggable.on Events.DragEnd, do (item) -> () ->
-		print item.y
 		if item.y > thresholdToClose
 			item.states.switch('closed')
 		else if item.y < thresholdToOpen
 			item.states.switch('open')
 			
-	item.draggable.on Events.Drag, do (item) -> () ->
-		card = item.childrenWithName('Card2')
-		card.scale = modulate(item.y, [0, -page.y], [itemWidth, Screen.width])
-		print card.scale
+	boundRadius = 300
+	item.draggable.on Events.DragMove, do (item) -> ({ offsetDirection }) ->
+		print offsetDirection
+		if item.y < -page.y
+			item.draggable.speedY = 0
+			item.y = -page.y
+		else
+			item.draggable.speedY = 1
+# 		distance =
+# 			y: Math.abs(item.y)
+# 	
+# 		item.draggable.speedY = 1 - Math.min(distance.y, boundRadius) / boundRadius
+			
+	item.on 'change:y', do (item) -> () ->
+		[card] = item.childrenWithName('CardBackground')
+		card.width = modulate(item.y, [0, -page.y], [itemWidth, Screen.width], true)
+		card.height = modulate(item.y, [0, -page.y], [cardHeight, cardHeight * 1.3], true)
+		card.centerX()
+		card.clip = false
+# 		print card.opacity
 
 sketch['ItemList'].destroy()
 	
