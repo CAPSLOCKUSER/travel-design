@@ -1,37 +1,45 @@
+# Import file "travel_ui" (sizes and positions are scaled 1:2)
+sketch1 = Framer.Importer.load("imported/travel_ui@2x")
 # Import file "travel_ui"
-sketch = Framer.Importer.load("imported/travel_ui@2x")
+sketch = Framer.Importer.load('imported/travel_ui@2x')
 sketch['ItemView'].destroy()
+sketch['StatusBar'].index = 200
 
 {modulate} = Utils
-{abs} = Math
+{abs, floor, min, max} = Math
 
 itemWidth = sketch['Item'].width
 cardHeight = sketch['CardBackground'].height
-gap = (Screen.width - itemWidth) / 2
+commentBaseY = sketch['Comment'].y
+sideGap = (Screen.width - itemWidth) / 2
+listGap = 22
 
 page = new PageComponent
+	index: 100
 	width: Screen.width
 	height: Screen.height
 	scrollVertical: false
 	originX: 0
 	contentInset: 
-		left: gap
-		right: gap
+		left: sideGap
+		right: sideGap
 	y: sketch['ItemList'].y
 	parent: sketch['Menu']
 	directionLock: true
+
+listY = -page.y
 	
-thresholdToOpen = -page.y * 0.2
-thresholdToClose = -page.y * 0.8
+thresholdToOpen = listY * 0.2
+thresholdToClose = listY * 0.8
 
 for number in [0...10]
 	perspectiveLayer = new Layer
+		perspective: 1000
 		width: itemWidth
 		height: Screen.height
 		backgroundColor: 'transparent'
-		perspective: 1000
 		parent: page.content
-		x: (itemWidth + 22) * number
+		x: (itemWidth + listGap) * number
 	
 	item = sketch['Item'].copy()
 	item.parent = perspectiveLayer
@@ -40,17 +48,13 @@ for number in [0...10]
 	item.draggable.enabled = false
 	item.draggable.horizontal = false
 	item.draggable.momentum = false
-
-# 	item.draggable.constraints =
-# 		y: -page.y
-# 		height: Screen.height
 	
 	item.states.add
 		open:
-			y: -page.y
+			y: listY
 		closed:
 			y: 0
-	item.states.switchInstant("closed")
+	item.states.switchInstant('closed')
 	item.states.animationOptions =
 		curve: "spring(200, 20, 10)"
 		
@@ -60,26 +64,29 @@ for number in [0...10]
 		else if item.y < thresholdToOpen
 			item.states.switch('open')
 			
-	boundRadius = 300
 	item.draggable.on Events.DragMove, do (item) -> ({ offsetDirection }) ->
-		print offsetDirection
-		if item.y < -page.y
-			item.draggable.speedY = 0
-			item.y = -page.y
-		else
-			item.draggable.speedY = 1
-# 		distance =
-# 			y: Math.abs(item.y)
-# 	
-# 		item.draggable.speedY = 1 - Math.min(distance.y, boundRadius) / boundRadius
+		distance = abs(item.y + page.y)
+		radius = 300
+		item.draggable.speedY = 1 - min(distance, radius) / radius
+		
+	item.draggable.on Events.DragEnd, do (item) -> () ->
+		item.draggable.speedY = 1
 			
 	item.on 'change:y', do (item) -> () ->
 		[card] = item.childrenWithName('CardBackground')
-		card.width = modulate(item.y, [0, -page.y], [itemWidth, Screen.width], true)
-		card.height = modulate(item.y, [0, -page.y], [cardHeight, cardHeight * 1.3], true)
+		[comment] = item.childrenWithName('Comment')
+		
+		card.width =
+			modulate(item.y, [0, listY], [itemWidth, Screen.width * 1.2], true)
+		card.height =
+			modulate(item.y, [0, listY], [cardHeight, cardHeight * 1.2], true)
 		card.centerX()
-		card.clip = false
-# 		print card.opacity
+
+		comment.y =
+			modulate(item.y, [0, listY], [commentBaseY, commentBaseY + 120], true)
+		comment.scale =
+			modulate(item.y, [0, listY], [1, 1.2], true)
+		
 
 sketch['ItemList'].destroy()
 	
@@ -101,11 +108,10 @@ calculateRotation = (distance) ->
 direction = 'left'
 page.onScroll (event) -> 
 	direction = event.offsetDirection if event.offsetDirection
-# 	print event
 
 page.onMove ->
 	for { children: [thisLayer] } in page.content.children
-		distance = abs(thisLayer.screenFrame.x - gap)
+		distance = abs(thisLayer.screenFrame.x - sideGap)
 		thisLayer.opacity = modulate(distance, [0, itemWidth], [1, 0.3], true)
 		thisLayer.rotationY = calculateRotation(distance, direction)
 		

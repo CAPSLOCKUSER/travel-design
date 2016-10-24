@@ -32,6 +32,33 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 		},
 		"children": [
 			{
+				"objectId": "02D161EE-93F5-4C2D-A9E6-9F11EFB88C53",
+				"kind": "group",
+				"name": "StatusBar",
+				"originalName": "StatusBar",
+				"maskFrame": null,
+				"layerFrame": {
+					"x": 6,
+					"y": 5,
+					"width": 364,
+					"height": 12
+				},
+				"visible": true,
+				"metadata": {
+					"opacity": 1
+				},
+				"image": {
+					"path": "images/Layer-StatusBar-mdjemtyx.png",
+					"frame": {
+						"x": 6,
+						"y": 5,
+						"width": 364,
+						"height": 12
+					}
+				},
+				"children": []
+			},
+			{
 				"objectId": "7D32EDF3-60C7-436A-9F43-C1086A3F5B3D",
 				"kind": "group",
 				"name": "ItemList",
@@ -68,8 +95,8 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 							{
 								"objectId": "87297245-9C2A-460C-8932-940FA6A0D82B",
 								"kind": "group",
-								"name": "Comment",
-								"originalName": "Comment",
+								"name": "Comment_Copy",
+								"originalName": "Comment Copy",
 								"maskFrame": null,
 								"layerFrame": {
 									"x": 330,
@@ -82,7 +109,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 									"opacity": 1
 								},
 								"image": {
-									"path": "images/Layer-Comment-odcyotcy.png",
+									"path": "images/Layer-Comment_Copy-odcyotcy.png",
 									"frame": {
 										"x": 330,
 										"y": 313,
@@ -238,8 +265,8 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 							{
 								"objectId": "933E9BEC-4FE2-441A-992C-F3A053474440",
 								"kind": "group",
-								"name": "Comment1",
-								"originalName": "Comment",
+								"name": "Comment_Copy1",
+								"originalName": "Comment Copy",
 								"maskFrame": null,
 								"layerFrame": {
 									"x": -222,
@@ -252,7 +279,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 									"opacity": 1
 								},
 								"image": {
-									"path": "images/Layer-Comment-otmzrtlc.png",
+									"path": "images/Layer-Comment_Copy-otmzrtlc.png",
 									"frame": {
 										"x": -222,
 										"y": 313,
@@ -408,8 +435,8 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 							{
 								"objectId": "CCA28667-754B-4535-8455-FC2FBCAD2D0C",
 								"kind": "group",
-								"name": "Comment2",
-								"originalName": "Comment",
+								"name": "Comment",
+								"originalName": "Comment*",
 								"maskFrame": null,
 								"layerFrame": {
 									"x": 54,
@@ -430,99 +457,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 										"height": 324
 									}
 								},
-								"children": [
-									{
-										"objectId": "0A22B04F-51FE-425A-BBAE-A822B2C7C1C1",
-										"kind": "group",
-										"name": "Image2",
-										"originalName": "Image",
-										"maskFrame": {
-											"x": 0,
-											"y": 0,
-											"width": 214,
-											"height": 88
-										},
-										"layerFrame": {
-											"x": 81,
-											"y": 495,
-											"width": 214,
-											"height": 88
-										},
-										"visible": true,
-										"metadata": {
-											"opacity": 1
-										},
-										"image": {
-											"path": "images/Layer-Image-meeymkiw.png",
-											"frame": {
-												"x": 81,
-												"y": 495,
-												"width": 214,
-												"height": 88
-											}
-										},
-										"children": []
-									},
-									{
-										"objectId": "5C1C4798-48DD-4C87-9CA2-322EC345A4E3",
-										"kind": "group",
-										"name": "Avatar2",
-										"originalName": "Avatar",
-										"maskFrame": {
-											"x": 0,
-											"y": 0,
-											"width": 42,
-											"height": 42
-										},
-										"layerFrame": {
-											"x": 80,
-											"y": 330,
-											"width": 213,
-											"height": 42
-										},
-										"visible": true,
-										"metadata": {
-											"opacity": 1
-										},
-										"image": {
-											"path": "images/Layer-Avatar-numxqzq3.png",
-											"frame": {
-												"x": 80,
-												"y": 330,
-												"width": 213,
-												"height": 42
-											}
-										},
-										"children": []
-									},
-									{
-										"objectId": "A1A21B26-95C8-4E06-924A-5E59F10A00C6",
-										"kind": "group",
-										"name": "Share2",
-										"originalName": "Share",
-										"maskFrame": null,
-										"layerFrame": {
-											"x": 84,
-											"y": 603,
-											"width": 213,
-											"height": 17
-										},
-										"visible": true,
-										"metadata": {
-											"opacity": 1
-										},
-										"image": {
-											"path": "images/Layer-Share-qtfbmjfc.png",
-											"frame": {
-												"x": 84,
-												"y": 603,
-												"width": 213,
-												"height": 17
-											}
-										},
-										"children": []
-									}
-								]
+								"children": []
 							},
 							{
 								"objectId": "A931ABDD-C810-4918-89E9-B29802895806",
@@ -655,7 +590,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 			{
 				"objectId": "23174BBC-0E92-42D7-9100-CC9D23983DBE",
 				"kind": "group",
-				"name": "Comment3",
+				"name": "Comment1",
 				"originalName": "Comment",
 				"maskFrame": null,
 				"layerFrame": {
@@ -681,7 +616,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 					{
 						"objectId": "A8AE5679-EF30-4854-9BC4-89BD3F5B5F41",
 						"kind": "group",
-						"name": "Image3",
+						"name": "Image2",
 						"originalName": "Image",
 						"maskFrame": {
 							"x": 0,
@@ -713,7 +648,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 					{
 						"objectId": "9DFFDF2A-1E87-4378-8C1B-96B1D890D6FF",
 						"kind": "group",
-						"name": "Avatar3",
+						"name": "Avatar2",
 						"originalName": "Avatar",
 						"maskFrame": {
 							"x": 0,
@@ -745,7 +680,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 					{
 						"objectId": "3E3E6D14-CF3A-4FAB-8A84-7002E1B2D446",
 						"kind": "group",
-						"name": "Share3",
+						"name": "Share2",
 						"originalName": "Share",
 						"maskFrame": null,
 						"layerFrame": {
@@ -774,7 +709,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 			{
 				"objectId": "AF6DB39B-D556-4F48-8796-B5ED4AED482B",
 				"kind": "group",
-				"name": "Comment4",
+				"name": "Comment2",
 				"originalName": "Comment",
 				"maskFrame": null,
 				"layerFrame": {
@@ -800,7 +735,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 					{
 						"objectId": "050592AE-5788-48BD-A75A-07B2123321AB",
 						"kind": "group",
-						"name": "Image4",
+						"name": "Image3",
 						"originalName": "Image",
 						"maskFrame": {
 							"x": 0,
@@ -832,7 +767,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 					{
 						"objectId": "F3736B20-34B0-4984-A4BF-A1177A24C468",
 						"kind": "group",
-						"name": "Avatar4",
+						"name": "Avatar3",
 						"originalName": "Avatar",
 						"maskFrame": {
 							"x": 0,
@@ -864,7 +799,7 @@ window.__imported__["travel_ui@2x/layers.json.js"] = [
 					{
 						"objectId": "6BE8C712-5178-4106-B90C-32EC0B6161D2",
 						"kind": "group",
-						"name": "Share4",
+						"name": "Share3",
 						"originalName": "Share",
 						"maskFrame": null,
 						"layerFrame": {
