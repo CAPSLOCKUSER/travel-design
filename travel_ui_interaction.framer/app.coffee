@@ -1,11 +1,19 @@
 sketch = Framer.Importer.load('imported/travel_ui@2x')
 sketch['ItemView'].destroy()
-sketch['StatusBar'].index = 200
 
 Framer.Extras.Hints.disable() # i wish i could disable it only for "tap on draggable"
 
 {modulate} = Utils
 {abs, floor, min, max} = Math
+
+createModulate = (value) -> (fromA, fromB) -> (toA, toB) ->
+	modulate(value, [fromA, fromB], [toA, toB], false)
+	
+INDEX =
+	STATUS_BAR: 200
+	ACTIVE_CARD: 60
+	INACTIVE_CARD: 50
+	PAGE: 100
 
 itemWidth = sketch['Item'].width
 cardHeight = sketch['CardBackground'].height
@@ -13,9 +21,10 @@ commentBaseY = sketch['Comment'].y
 sideGap = (Screen.width - itemWidth) / 2
 listGap = 30
 inactiveItemOpacity = 0.5
+listY = -sketch['ItemList'].y
 
 page = new PageComponent
-	index: 100
+	index: INDEX.PAGE
 	width: Screen.width
 	height: Screen.height
 	scrollVertical: false
@@ -25,12 +34,6 @@ page = new PageComponent
 		right: sideGap
 	y: sketch['ItemList'].y
 	parent: sketch['Menu']
-	directionLock: true
-
-listY = -page.y
-	
-thresholdToOpen = listY * 0.2
-thresholdToClose = listY * 0.8
 
 for number in [0...10]
 	perspectiveLayer = new Layer
@@ -45,7 +48,7 @@ for number in [0...10]
 	item.parent = perspectiveLayer
 	item.opacity = inactiveItemOpacity
 	item.x = 0
-	item.index = 50
+	item.index = INDEX.INACTIVE_CARD
 	item.draggable.enabled = false
 	item.draggable.horizontal = false
 	item.draggable.momentum = false
@@ -81,32 +84,28 @@ for number in [0...10]
 		[comment] = item.childrenWithName('Comment')
 		[cardContent] = item.childrenWithName('CardContent')
 		
-		card.width =
-			modulate(item.y, [0, listY], [itemWidth, Screen.width * 1.2], true)
-		card.height =
-			modulate(item.y, [0, listY], [cardHeight, cardHeight * 1.2], true)
+		between = createModulate(item.y)(0, listY)
+		
+		card.width = between(itemWidth, Screen.width * 1.2)
+		card.height = between(cardHeight, cardHeight * 1.2)
 		card.centerX()
 
-		comment.y =
-			modulate(item.y, [0, listY], [commentBaseY, commentBaseY + 120], true)
-		comment.scale =
-			modulate(item.y, [0, listY], [1, 1.2], true)
+		comment.y = between(commentBaseY, commentBaseY + 120)
+		comment.scale = between(1, 1.2)
 		
-		cardContent.y =
-			modulate(item.y, [0, listY], [0, 50], true)
-		cardContent.scale =
-			modulate(item.y, [0, listY], [1, 1.2], true)
+		cardContent.y = between(0, 50)
+		cardContent.scale = between(1, 1.2)
 			
 		for thisPage in page.content.children
 			if thisPage isnt page.currentPage
-				thisPage.children[0].opacity =
-					modulate(item.y, [0, listY * 0.7], [inactiveItemOpacity, 0], true)
+				thisPage.children[0].opacity = between(inactiveItemOpacity, 0)
 
 sketch['ItemList'].destroy()
+sketch['StatusBar'].index = INDEX.STATUS_BAR
 	
 startAtLayer = page.content.children[4]
 startAtLayer.children[0].opacity = 1
-startAtLayer.index = 60
+startAtLayer.index = INDEX.ACTIVE_CARD
 startAtLayer.children[0].draggable.enabled = true
 page.snapToPage(startAtLayer, false)
 
@@ -124,7 +123,6 @@ page.onScroll (event) ->
 		facing = if pageDragDirection == 'right' then -1 else 1
 		thisLayer.rotationY = modulate(pageDragDistance, [0, 200], [0, 10], true) * facing
 	
-calculateRotation = ->
 page.onMove ->
 	for { children: [thisLayer] } in page.content.children
 		distance = abs(thisLayer.screenFrame.x - sideGap)
@@ -135,7 +133,7 @@ page.on 'change:currentPage', ->
 	for thisPage in page.content.children
 		isActive = thisPage == page.currentPage
 		thisPage.children[0].draggable.enabled = isActive
-		thisPage.index = if isActive then 60 else 50
+		thisPage.index = if isActive then INDEX.ACTIVE_CARD else INDEX.INACTIVE_CARD
 	
 page.on Events.ScrollStart, ->
 	for { children: [thisLayer] } in page.content.children
