@@ -1,3 +1,5 @@
+# Import file "travel_ui" (sizes and positions are scaled 1:2)
+sketch4 = Framer.Importer.load("imported/travel_ui@2x")
 sketch = Framer.Importer.load('imported/travel_ui@2x')
 sketch['ItemView'].destroy()
 
@@ -7,7 +9,7 @@ Framer.Extras.Hints.disable() # i wish i could disable it only for "tap on dragg
 {abs, floor, min, max} = Math
 
 createModulate = (value) -> (fromA, fromB) -> (toA, toB) ->
-	modulate(value, [fromA, fromB], [toA, toB], false)
+	modulate(value, [fromA, fromB], [toA, toB], true)
 	
 INDEX =
 	STATUS_BAR: 200
@@ -22,6 +24,7 @@ sideGap = (Screen.width - itemWidth) / 2
 listGap = 30
 inactiveItemOpacity = 0.5
 listY = -sketch['ItemList'].y
+searchFieldWidth = sketch['SearchField'].width
 
 page = new PageComponent
 	index: INDEX.PAGE
@@ -34,6 +37,12 @@ page = new PageComponent
 		right: sideGap
 	y: sketch['ItemList'].y
 	parent: sketch['Menu']
+
+# page.animateOptions = page.animate.options
+# 
+# page.animate
+# 	options:
+# 		curve: "spring(631, 10, 14)"
 
 for number in [0...10]
 	perspectiveLayer = new Layer
@@ -60,10 +69,10 @@ for number in [0...10]
 			y: 0
 	item.animate 'closed', instant: true
 	item.states.animationOptions =
-		curve: "spring(200, 20, 10)"
+		curve: 'spring(200, 20, 10)'
 		
 	item.draggable.on Events.DragStart, () ->
-		page.speedX = 0
+		page.content.draggable = false
 			
 	item.draggable.on Events.DragMove, do (item) -> () ->
 		distance = abs(item.y)
@@ -75,7 +84,7 @@ for number in [0...10]
 		
 		if offsetDirection == 'down'
 			item.animate 'closed'
-			page.speedX = 1
+			page.content.draggable = true
 		else if offsetDirection == 'up'
 			item.animate 'open'
 			
@@ -99,6 +108,12 @@ for number in [0...10]
 		for thisPage in page.content.children
 			if thisPage isnt page.currentPage
 				thisPage.children[0].opacity = between(inactiveItemOpacity, 0)
+				
+		sketch['SearchField'].opacity = between(1, 0)
+		sketch['SearchField'].scale = between(1, 0.3)
+		
+		sketch['OptionsIcon'].opacity = between(1, 0)
+		sketch['OptionsIcon'].scale = between(1, 0.3)
 
 sketch['ItemList'].destroy()
 sketch['StatusBar'].index = INDEX.STATUS_BAR

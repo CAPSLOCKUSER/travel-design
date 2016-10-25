@@ -542,16 +542,69 @@
 				"metadata": {
 					"opacity": 1
 				},
-				"image": {
-					"path": "images/Layer-Search-oeq3njg2.png",
-					"frame": {
-						"x": 20,
-						"y": 45,
-						"width": 335,
-						"height": 45
+				"children": [
+					{
+						"objectId": "C8D5730E-769B-4E13-8FF5-4CA7E3C22BA9",
+						"kind": "text",
+						"name": "OptionsIcon",
+						"originalName": "OptionsIcon",
+						"maskFrame": null,
+						"layerFrame": {
+							"x": 331,
+							"y": 50,
+							"width": 24,
+							"height": 25
+						},
+						"visible": true,
+						"metadata": {
+							"opacity": 1,
+							"string": "",
+							"css": [
+								"/* Options: */",
+								"font-family: simple-line-icons;",
+								"font-size: 24px;",
+								"color: #FFFFFF;"
+							]
+						},
+						"image": {
+							"path": "images/Layer-OptionsIcon-qzhentcz.png",
+							"frame": {
+								"x": 331,
+								"y": 50,
+								"width": 24,
+								"height": 25
+							}
+						},
+						"children": []
+					},
+					{
+						"objectId": "7D829862-A095-4660-BB5F-451FBD315453",
+						"kind": "group",
+						"name": "SearchField",
+						"originalName": "SearchField",
+						"maskFrame": null,
+						"layerFrame": {
+							"x": 20,
+							"y": 45,
+							"width": 298,
+							"height": 45
+						},
+						"visible": true,
+						"metadata": {
+							"opacity": 1
+						},
+						"image": {
+							"path": "images/Layer-SearchField-n0q4mjk4.png",
+							"frame": {
+								"x": 20,
+								"y": 45,
+								"width": 298,
+								"height": 45
+							}
+						},
+						"children": []
 					}
-				},
-				"children": []
+				]
 			}
 		]
 	},
