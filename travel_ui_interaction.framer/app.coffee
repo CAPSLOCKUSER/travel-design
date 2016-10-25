@@ -34,7 +34,7 @@ thresholdToClose = listY * 0.8
 
 for number in [0...10]
 	perspectiveLayer = new Layer
-		perspective: 1000
+		perspective: 2000
 		width: itemWidth
 		height: Screen.height
 		backgroundColor: 'transparent'
@@ -114,22 +114,22 @@ page.snapToPage(startAtLayer, false)
 page.clip = false
 page.content.clip = false
 
-calculateRotation = (distance) ->
-# 	sign = if direction == 'right' then -1 else 1
-# 	dist = distance % itemWidth
-# 	print dist
-	return 0
-
-direction = 'left'
+pageDragDirection = 'left'
+pageDragDistance = 0
 page.onScroll (event) -> 
-	direction = event.offsetDirection if event.offsetDirection
-
+	pageDragDistance = abs(event.offset.x) if event.offset
+	pageDragDirection = event.offsetDirection if event.offsetDirection
+	
+	for { children: [thisLayer] } in page.content.children
+		facing = if pageDragDirection == 'right' then -1 else 1
+		thisLayer.rotationY = modulate(pageDragDistance, [0, 200], [0, 10], true) * facing
+	
+calculateRotation = ->
 page.onMove ->
 	for { children: [thisLayer] } in page.content.children
 		distance = abs(thisLayer.screenFrame.x - sideGap)
 		thisLayer.opacity =
 			modulate(distance, [0, itemWidth], [1, inactiveItemOpacity], true)
-		thisLayer.rotationY = calculateRotation(distance, direction)
 		
 page.on 'change:currentPage', ->
 	for thisPage in page.content.children
@@ -140,9 +140,15 @@ page.on 'change:currentPage', ->
 page.on Events.ScrollStart, ->
 	for { children: [thisLayer] } in page.content.children
 		thisLayer.draggable.speedY = 0
+		
+page.on Events.Scroll, ->
 	
 page.on Events.ScrollEnd, ->
+	pageDragDistance = 0
 	for { children: [thisLayer] } in page.content.children
 		thisLayer.draggable.speedY = 1
+		thisLayer.animate
+			properties:
+				rotationY: 0
 	
 	
