@@ -53,12 +53,12 @@ for number in [0...10]
 	item.draggable.horizontal = false
 	item.draggable.momentum = false
 	
-	item.states.add
+	item.states =
 		open:
 			y: listY
 		closed:
 			y: 0
-	item.states.switchInstant('closed')
+	item.animate 'closed', instant: true
 	item.states.animationOptions =
 		curve: "spring(200, 20, 10)"
 		
@@ -74,10 +74,10 @@ for number in [0...10]
 		item.draggable.speedY = 1
 		
 		if offsetDirection == 'down'
-			item.states.switch('closed')
+			item.animate 'closed'
 			page.speedX = 1
 		else if offsetDirection == 'up'
-			item.states.switch('open')
+			item.animate 'open'
 			
 	item.on 'change:y', do (item) -> () ->
 		[card] = item.childrenWithName('CardBackground')
@@ -121,7 +121,8 @@ page.onScroll (event) ->
 	
 	for { children: [thisLayer] } in page.content.children
 		facing = if pageDragDirection == 'right' then -1 else 1
-		thisLayer.rotationY = modulate(pageDragDistance, [0, 200], [0, 10], true) * facing
+		thisLayer.rotationY =
+			modulate(pageDragDistance, [0, 200], [0, 10], true) * facing
 	
 page.onMove ->
 	for { children: [thisLayer] } in page.content.children
@@ -138,8 +139,6 @@ page.on 'change:currentPage', ->
 page.on Events.ScrollStart, ->
 	for { children: [thisLayer] } in page.content.children
 		thisLayer.draggable.speedY = 0
-		
-page.on Events.Scroll, ->
 	
 page.on Events.ScrollEnd, ->
 	pageDragDistance = 0
